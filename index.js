@@ -1,17 +1,13 @@
 const weatherForm = document.querySelector(".weatherForm");
 const cityInput = document.querySelector(".cityInput");
 const card = document.querySelector(".card");
-
 const apiKey = "b2ad658dd7bc86110d8ae10dafbdc0ef";
 
 weatherForm.addEventListener("submit", async event => {
-
   event.preventDefault();
-
   const city = cityInput.value;
 
   if(city){
-
     try{
       const weatherData = await getWeatherData(city);
       displayWeatherInfo(weatherData);
@@ -20,20 +16,16 @@ weatherForm.addEventListener("submit", async event => {
       console.error(error);
       displayError(error);
     }
-
   }
   else{
     displayError("Please enter a valid city");
   }
-
 });
 
+
 async function getWeatherData(city) {
-  
   const apiUrl = `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${apiKey}`;
-
   const response = await fetch(apiUrl);
-
   console.log(response);
 
   if(!response.ok){
@@ -42,12 +34,10 @@ async function getWeatherData(city) {
   else{
     return await response.json();
   }
-
 }
 
 
 function displayWeatherInfo(data){
-
   const {name: city, 
         main:{temp, humidity}, 
         weather: [{description, id}]} = data;
@@ -78,12 +68,10 @@ function displayWeatherInfo(data){
   card.appendChild(humidityDisplay);
   card.appendChild(descDisplay);
   card.appendChild(weatherEmoji);
-
 }
 
 
 function getWeatherEmoji(weatherId){
-
   switch(true){
     case (weatherId >= 200 && weatherId < 300):
       return "⛈️";
@@ -102,12 +90,10 @@ function getWeatherEmoji(weatherId){
       default:
         return "👽";
   }
-
 }
 
 
 function displayError(message){
-
   const errorDisplay = document.createElement("p");
   errorDisplay.textContent = message;
   errorDisplay.classList.add("errorDisplay");
